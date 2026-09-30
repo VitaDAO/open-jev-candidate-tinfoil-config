@@ -1,12 +1,12 @@
 # Separate candidate only. Production and Vita remain on their existing releases.
-# Validated source e895c80913a94aa53ac2e4936d17af5e3527f473; Actions 36724090406.
+# Validated source c481b9448cd7d610b840cf25eef63b04b1fb5e82; Actions 36731266178.
 # Candidate allocation reduced to 8 GiB at owner request; startup acceptance required.
 cvm-version: 0.14.7
 cpus: 4
 memory: 8192
 containers:
   - name: open-jev-candidate
-    image: ghcr.io/vitadao/open-jev-tinfoil@sha256:def1f457a47689e9ff9c687e3966c709ccda4d78065ad4c4e1b6ece5bbb0d523
+    image: ghcr.io/vitadao/open-jev-tinfoil@sha256:94d87c7275818ec783d3ee6dc246ad40708cdeb1f11b952ba29596dc36ea5fa1
     env:
       - OMP_NUM_THREADS: "4"
       - MKL_NUM_THREADS: "4"
