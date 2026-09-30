@@ -1,0 +1,31 @@
+# Separate candidate only. Production and Vita remain on their existing releases.
+# Validated source e895c80913a94aa53ac2e4936d17af5e3527f473; Actions 36724090406.
+# Process fits in 8 GiB; CVM 0.14.7 requires a larger VM for its image RAM disk.
+cvm-version: 0.14.7
+cpus: 4
+memory: 40960
+containers:
+  - name: open-jev-candidate
+    image: ghcr.io/vitadao/open-jev-tinfoil@sha256:def1f457a47689e9ff9c687e3966c709ccda4d78065ad4c4e1b6ece5bbb0d523
+    env:
+      - OMP_NUM_THREADS: "4"
+      - MKL_NUM_THREADS: "4"
+      - ENABLE_EXPERIMENTAL_SELECTOR: "1"
+    secrets:
+      - OPEN_JEV_CANDIDATE_API_KEY
+    tmpfs:
+      /tmp: rw,noexec,nosuid,nodev,size=64m,mode=1777
+    restart: always
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      start_period: 180s
+shim:
+  upstream-port: 8080
+  paths:
+    - /health
+    - /decide
+    - /route
+    - /v1/select
+# Closed outbound network; no debug mode or automatic updates.
