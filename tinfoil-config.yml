@@ -3,7 +3,7 @@
 # Process fits in 8 GiB; CVM 0.14.7 requires a larger VM for its image RAM disk.
 cvm-version: 0.14.7
 cpus: 4
-memory: 40960
+memory: 65536
 containers:
   - name: open-jev-candidate
     image: ghcr.io/vitadao/open-jev-tinfoil@sha256:def1f457a47689e9ff9c687e3966c709ccda4d78065ad4c4e1b6ece5bbb0d523

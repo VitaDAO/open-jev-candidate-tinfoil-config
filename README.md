@@ -16,6 +16,8 @@ Learned models derive from answerdotai/ModernBERT-base (Apache-2.0). Generic /de
 
 Linux portability fixes register the serving UID and restore Mac-tagged head tensors explicitly on CPU. Exact statuses and acquisition queries match the original local build on all 300 readable parity/safety cases. No weights or acceptance thresholds changed.
 
-Resource allocation: 4 CPUs and 40 GiB CVM memory. Linux process acceptance runs under an 8 GiB limit, with measured 2.7 GiB peak. Compressed plus unpacked image storage is about 5.1 GiB, exceeding the fixed 4 GiB private image disk used by CVM 0.14.7 below its 32 GiB detected-RAM threshold. The larger allocation addresses image storage without changing model weights.
+Resource allocation: 4 CPUs and 64 GiB CVM memory. Linux process acceptance runs under an 8 GiB limit, with measured 2.7 GiB peak. Compressed plus unpacked image storage is about 5.1 GiB, exceeding the fixed 4 GiB private image disk used by CVM 0.14.7 below its 32 GiB detected-RAM threshold. The larger allocation addresses image storage without changing model weights.
 
 Linux build and acceptance: https://github.com/VitaDAO/open-jev-tinfoil/actions/runs/36724090406 (2928 passed, 8 skipped; 300 serving parity/safety checks passed).
+
+Tinfoil control-plane sizes are discrete. A 40 GiB configuration was rejected before any container was created. 64 GiB is the supported size safely above the CVM 32 GiB detected-RAM threshold; a nominal 32 GiB guest can lose usable RAM to boot reservations and retain the 4 GiB fallback disk.
