@@ -1,21 +1,21 @@
 # JEV candidate enclave
 
-Separate confidential candidate deployment for the learned r8 parser pair and verifier v4. This repository is independent of VitaDAO/open-jev-tinfoil so candidate attestation releases cannot change production clients that resolve the latest release.
+Separate confidential deployment for the learned r8 parser pair and verifier v4. Production open-jev and Vita remain unchanged. Do not switch Vita or production without the owner's explicit command.
 
-Production open-jev and Vita remain unchanged. No automatic updates, debug access, outbound network, request logs or data persistence. Only synthetic acceptance requests are used for deployment verification.
+The attestation config repository is independent of VitaDAO/open-jev-tinfoil so candidate releases cannot change production clients that resolve the original repository's Latest release. Auto-updates and debug/SSH access are disabled. Application outbound network is closed; request logs and data persistence are disabled.
 
-Source: VitaDAO/open-jev-tinfoil, branch codex/jev-tinfoil-candidate-20260930. Runtime model code is the locally tested candidate; the entrypoint maps a dedicated candidate secret into the existing API contract. Models and file manifest are pinned.
+## Resource allocation and model integrity
 
-Selector SHA256: 56f4a035c6742951ac86eddbd5f66214b6942bb99c85ecb5227b6b382ee39c78. Learned model/threshold SHA256: 185a18e02c4b8a3490d263358d12adeaf92fce446bdb249ef57525dbdc61cad4. v2 wire contract, acquisition only; unsupported requests preserve the native fallback.
+The candidate is configured for **4 CPUs, 8 GiB RAM and no GPU**. The learned model files are on a separate dm-verity verified read-only model disk. The runtime image retains the original /opt/learned paths through a mount symlink and verifies the original SHA256 manifest and every listed model file before startup. File bytes, thresholds and inference code are unchanged. No retraining or additional quantization was performed.
 
-Vita must not be switched to this candidate until explicitly instructed by the owner.
+The Docker image's compressed-plus-unpacked storage estimate is 3.02 GiB, below the CVM's 4 GiB private image disk limit. This replaces the initial oversized 64 GiB deployment, which was stopped. Enclave startup and live attested acceptance remain pending until verified.
 
-Candidate source commit: `c481b9448cd7d610b840cf25eef63b04b1fb5e82`.
+Validated runtime source: `e0eb8248c5b9d09444106b4a795c9d929042d0ca` on `codex/jev-tinfoil-candidate-20260930` in VitaDAO/open-jev-tinfoil. Image: `ghcr.io/vitadao/open-jev-tinfoil@sha256:09feadd39a072a20cd4da3220e53ca036b9756a541bce854238b8d587273a88d`.
 
-Learned models derive from answerdotai/ModernBERT-base (Apache-2.0). Generic /decide and /route preserve the pinned com-kotobalabs/open-jev-deberta-v3-large backbone and its recorded FP16 storage derivation. No model retraining, quantization or cutoff change is part of this deployment.
+Linux checks: https://github.com/VitaDAO/open-jev-tinfoil/actions/runs/36735099774 — 2932 passed, 8 skipped; 300 serving parity/safety cases passed under an 8 GiB container limit. The generic /decide and /route model and contract are retained.
 
-Linux portability fixes register the serving UID and restore Mac-tagged head tensors explicitly on CPU. Exact statuses and acquisition queries match the original local build on all 300 readable parity/safety cases. No weights or acceptance thresholds changed.
+Model source: `alexdobrin/open-jev-r8-v4-candidate-20260930@0f3a747adc8b497ea46b503f968ba1aef1a8e6bc`. It contains only the 25 exact model/config/tokenizer files, their original manifest, source license and provenance. These same model files were already published as the model-only GitHub build asset. No training datasets, sealed exams, private requests, health records or credentials were published. ModernBERT base provenance: answerdotai/ModernBERT-base, Apache-2.0. Verified model-pack root: `b3dd8bf34a654341c6cce57ae9cec79e64d05a9e0c049e092a7862c9057f87bd` (schema 1).
 
-Resource allocation: **4 CPUs and 8 GiB CVM memory**, reduced at owner request. Model files are split into separate Docker layers to reduce transient unpacking pressure; their pinned bytes, thresholds and selector identity are unchanged. The original 64 GiB candidate was stopped. Platform startup and live attested acceptance must pass before claiming this allocation is ready.
+Selector SHA256: `56f4a035c6742951ac86eddbd5f66214b6942bb99c85ecb5227b6b382ee39c78`. Learned weights/threshold SHA256: `185a18e02c4b8a3490d263358d12adeaf92fce446bdb249ef57525dbdc61cad4`. Original model manifest SHA256: `da75040b34439f604e4c812690ae91f1ae0453ef902c54f51a98c73d70ecb97d`.
 
-Linux build and acceptance: https://github.com/VitaDAO/open-jev-tinfoil/actions/runs/36731266178 (2928 passed, 8 skipped; 300 serving parity/safety checks passed under an 8 GiB container limit).
+The v2 acquisition contract remains unchanged. Unsupported requests retain native fallback. Endpoint parity checks are synthetic serving checks, not a fresh blind accuracy estimate or Vita final-answer acceptance.

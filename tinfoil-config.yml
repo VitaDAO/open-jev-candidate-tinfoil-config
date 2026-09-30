@@ -1,12 +1,18 @@
 # Separate candidate only. Production and Vita remain on their existing releases.
-# Validated source c481b9448cd7d610b840cf25eef63b04b1fb5e82; Actions 36731266178.
-# Candidate allocation reduced to 8 GiB at owner request; startup acceptance required.
+# Validated source e0eb8248c5b9d09444106b4a795c9d929042d0ca; Actions 36735099774.
+# Exact learned weights use a verified read-only model disk; candidate remains at 8 GiB.
 cvm-version: 0.14.7
 cpus: 4
 memory: 8192
+models:
+  - name: jev-learned
+    repo: alexdobrin/open-jev-r8-v4-candidate-20260930@0f3a747adc8b497ea46b503f968ba1aef1a8e6bc
+    mpk: b3dd8bf34a654341c6cce57ae9cec79e64d05a9e0c049e092a7862c9057f87bd_1141026816_ad1dfdbc-aca7-5769-8b85-cc67814e5ccc
 containers:
   - name: open-jev-candidate
-    image: ghcr.io/vitadao/open-jev-tinfoil@sha256:94d87c7275818ec783d3ee6dc246ad40708cdeb1f11b952ba29596dc36ea5fa1
+    image: ghcr.io/vitadao/open-jev-tinfoil@sha256:09feadd39a072a20cd4da3220e53ca036b9756a541bce854238b8d587273a88d
+    models:
+      - jev-learned
     env:
       - OMP_NUM_THREADS: "4"
       - MKL_NUM_THREADS: "4"
