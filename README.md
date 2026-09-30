@@ -8,7 +8,7 @@ The attestation config repository is independent of VitaDAO/open-jev-tinfoil so 
 
 The candidate is configured for **4 CPUs, 8 GiB RAM and no GPU**. The learned model files are on a separate dm-verity verified read-only model disk. The runtime image retains the original /opt/learned paths through a mount symlink and verifies the original SHA256 manifest and every listed model file before startup. File bytes, thresholds and inference code are unchanged. No retraining or additional quantization was performed.
 
-The Docker image's compressed-plus-unpacked storage estimate is 3.02 GiB, below the CVM's 4 GiB private image disk limit. This replaces the initial oversized 64 GiB deployment, which was stopped. Enclave startup and live attested acceptance remain pending until verified.
+The Docker image's compressed-plus-unpacked storage estimate is 3.02 GiB, below the CVM's 4 GiB private image disk limit. This replaces the initial oversized 64 GiB deployment, which was stopped. Release v0.1.4 is ready on 8 GiB. Live pinned attestation and 300/300 synthetic endpoint parity checks passed, including 90 acute safety handoffs; authentication, schema rejection and bounded concurrency checks passed on 2026-10-01 local.
 
 Validated runtime source: `e0eb8248c5b9d09444106b4a795c9d929042d0ca` on `codex/jev-tinfoil-candidate-20260930` in VitaDAO/open-jev-tinfoil. Image: `ghcr.io/vitadao/open-jev-tinfoil@sha256:09feadd39a072a20cd4da3220e53ca036b9756a541bce854238b8d587273a88d`.
 
