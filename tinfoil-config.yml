@@ -1,5 +1,5 @@
 # Separate candidate only. Production and Vita remain on their existing releases.
-# Validated source 40ed2611bc8f477cce0a3e64628c2a0e4d719a5f; Actions 36751136808.
+# Validated source e13812231398bf6378fa7f577e347d43f742c406; Actions 36788860723.
 # Exact learned weights use a verified read-only model disk; candidate remains at 8 GiB.
 cvm-version: 0.14.7
 cpus: 4
@@ -10,7 +10,7 @@ models:
     mpk: b3dd8bf34a654341c6cce57ae9cec79e64d05a9e0c049e092a7862c9057f87bd_1141026816_ad1dfdbc-aca7-5769-8b85-cc67814e5ccc
 containers:
   - name: open-jev-candidate
-    image: ghcr.io/vitadao/open-jev-tinfoil@sha256:3541c5ca189f227eed456f7f8a9872ab8f7b2369a82b76b8a4b0345f7133ea18
+    image: ghcr.io/vitadao/open-jev-tinfoil@sha256:7bfff3eac1cff02e6c9cdd84128ad79d4c65f10fd699c29b0ed83b5ea5574b96
     models:
       - jev-learned
     env:
