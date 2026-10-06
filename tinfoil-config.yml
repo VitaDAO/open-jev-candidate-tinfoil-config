@@ -1,5 +1,5 @@
-# Separate candidate only. Production and Vita remain on their existing releases.
-# Validated source 40ed2611bc8f477cce0a3e64628c2a0e4d719a5f; Actions 36751136808.
+# Candidate-only authentication release; production remains on its existing release.
+# Auth source f8cc51a; validated image build Actions 37454666357.
 # Exact learned weights use a verified read-only model disk; candidate remains at 8 GiB.
 cvm-version: 0.14.7
 cpus: 4
@@ -10,15 +10,14 @@ models:
     mpk: b3dd8bf34a654341c6cce57ae9cec79e64d05a9e0c049e092a7862c9057f87bd_1141026816_ad1dfdbc-aca7-5769-8b85-cc67814e5ccc
 containers:
   - name: open-jev-candidate
-    image: ghcr.io/vitadao/open-jev-tinfoil@sha256:3541c5ca189f227eed456f7f8a9872ab8f7b2369a82b76b8a4b0345f7133ea18
+    image: ghcr.io/vitadao/open-jev-tinfoil@sha256:14ceb50afeee7d8f3afa4ed15fe493a2e66ef17546a076964bc1aab14650bd23
     models:
       - jev-learned
     env:
       - OMP_NUM_THREADS: "4"
       - MKL_NUM_THREADS: "4"
       - ENABLE_EXPERIMENTAL_SELECTOR: "1"
-    secrets:
-      - OPEN_JEV_CANDIDATE_API_KEY
+      - OPEN_JEV_AUTH_MODE: "tinfoil"
     tmpfs:
       /tmp: rw,noexec,nosuid,nodev,size=64m,mode=1777
     restart: always
@@ -29,6 +28,16 @@ containers:
       start_period: 180s
 shim:
   upstream-port: 8080
+  authenticated: true
+  authenticated-endpoints:
+    - /decide
+    - /route
+    - /v1/select
+  origins:
+    - http://localhost:8080
+    - http://127.0.0.1:8080
+    - https://vita-agent-prod.vitality-now.containers.tinfoil.dev
+    - https://staging-vita-agent.debug.vitality-now.containers.tinfoil.dev
   paths:
     - /health
     - /decide
