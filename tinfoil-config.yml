@@ -1,5 +1,5 @@
 # Candidate-only authentication release; production remains on its existing release.
-# Auth source b44d7e1; validated image and selector identity Actions 37455706173.
+# v0.1.10 planner source 33820f7 (b44d7e1 + inventory-alias fix, named-metric handoff, workout count plans); validated image, selector f881fc84…, parity 300/300 in Actions 37843659950.
 # Exact learned weights use a verified read-only model disk; candidate remains at 8 GiB.
 cvm-version: 0.14.7
 cpus: 4
@@ -10,7 +10,7 @@ models:
     mpk: b3dd8bf34a654341c6cce57ae9cec79e64d05a9e0c049e092a7862c9057f87bd_1141026816_ad1dfdbc-aca7-5769-8b85-cc67814e5ccc
 containers:
   - name: open-jev-candidate
-    image: ghcr.io/vitadao/open-jev-tinfoil@sha256:88e92243c4c2d42dc96a052633a5715a6ca231e5201bde8eeb2e3164d85c54e8
+    image: ghcr.io/vitadao/open-jev-tinfoil@sha256:2ea0ce406ebdcfa8a5dd1a74167398a110c06f39e9a19fbec8597076f4e2574b
     models:
       - jev-learned
     env:
